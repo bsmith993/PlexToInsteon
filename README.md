@@ -13,7 +13,7 @@ REQUIREMENTS:
 -------------------------------------------------
 INSTALLATION:
 -You must have Python installed. (Google it if you need help) This is written for Python 3.4
--There is no installation for the script itself. Simply place the files in a folder (example: c:\scripts\PlexToInsteon) and then schedule a job using the windows task scheduler (or however else you'd like to trigger it). 
+-There is no installation for the script itself. Simply place the files in the following folder c:\scripts\PlexToInsteon and then schedule a job using the windows task scheduler (or however else you'd like to trigger it). 
 -Modify the ini file to your variables and fire up the script. 
 -The script will continuously run. It is low memory and CPU usage so I just let it be.
 -The script will fail right now if the Plex Server is stopped. So I have to restart it sometimes.
