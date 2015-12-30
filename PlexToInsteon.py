@@ -7,11 +7,11 @@ import logging
 
 config = configparser.ConfigParser()
 config.sections()
-config.read('PlexToInsteon.ini')
+config.read('c:\Scripts\PlexToInsteon\PlexToInsteon.ini')
 
 # Set up logging
 LogLevel = int(config['GENERAL']['LogLevel'])
-logging.basicConfig(format='%(asctime)s : %(levelname)s : %(message)s', datefmt='%m/%d/%Y %I:%M:%S %p', filemode='w', filename='PlexToInsteon.log', level=LogLevel)
+logging.basicConfig(format='%(asctime)s : %(levelname)s : %(message)s', datefmt='%m/%d/%Y %I:%M:%S %p', filemode='w', filename='c:\Scripts\PlexToInsteon\PlexToInsteon.log', level=LogLevel)
 
 # General Variables
 DelayTime = int(config['GENERAL']['DelayTime'])
@@ -20,7 +20,8 @@ LightingMode = "BRIGHT"
 # Plex Variables            
 PlexServerIP = config['PLEX']['PlexServerIP']
 PlexServerPort = config['PLEX']['PlexServerPort']
-PlexServerURL = 'http://' + PlexServerIP + ':' + PlexServerPort + '/status/sessions'
+PlexServerToken = config['PLEX']['PlexServerToken']
+PlexServerURL = 'http://' + PlexServerIP + ':' + PlexServerPort + '/status/sessions?X-Plex-Token=' + PlexServerToken
 PlexClient = config['PLEX']['PlexClient']
 
 #ISY Variables
@@ -32,8 +33,6 @@ ISYUsername = config['ISY']['ISYUsername']
 ISYPassword = config['ISY']['ISYPassword']
 TurnOnMovieLightingModeURL = 'http://' + ISYServerIP + ':' + ISYServerPort + '/rest/nodes/' + ISYMovieLightingSceneID + '/cmd/DON'
 TurnOnBrightLightingModeURL = 'http://' + ISYServerIP + ':' + ISYServerPort + '/rest/nodes/' + ISYBrightLightingSceneID + '/cmd/DON'
-print(TurnOnMovieLightingModeURL)
-print(TurnOnBrightLightingModeURL)
 
 def SendRestCommand(RestURL):
     """ Take the established REST command and send to the ISY. Status of 200=Success. Will try 5 times and abort. """
