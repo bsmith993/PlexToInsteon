@@ -30,8 +30,8 @@ Here's the plan... read the xml file from the Plex Server to see if a user defin
 
 -------------------------------------------------
 NOTES: 
-### For error checking on sending commands via the ISY. If the REST command does not return a success code, will try only 5 times. 
-### I chose NOT to do any current lighting state checks and continuous monitoring and setting of lighting mode. I only want it to send when the movie state changes. This way if you are watching a movie and want to manually override the lighting mode you aren't fighting with the script. You turn it up, it turns it back down. 
+For error checking on sending commands via the ISY. If the REST command does not return a success code, will try only 5 times. 
+I chose NOT to do any current lighting state checks and continuous monitoring and setting of lighting mode. I only want it to send when the movie state changes. This way if you are watching a movie and want to manually override the lighting mode you aren't fighting with the script. You turn it up, it turns it back down. 
 
 -------------------------------------------------
 UPDATES:
