@@ -1,5 +1,6 @@
 import urllib.request
 import urllib.parse
+import urllib.error
 import xml.etree.ElementTree as etree
 import time
 import configparser
@@ -74,30 +75,33 @@ print('--------------------------------------------')
 
 while True:
     logging.debug('-----------------------------------------')
-    u = urllib.request.urlopen(PlexServerURL)
-    tree = etree.parse(u)
-    root = tree.getroot()
     try:
-        value = root.find(".//*[@title='" + PlexClient + "']")
-        MovieStatus = value.attrib["state"]
-    except AttributeError:
-        MovieStatus = "stopped"
-    logging.debug('Movie is %s', MovieStatus)
-    if MovieStatus == "playing":
-        if LightingMode == "BRIGHT":
-            logging.info('Turning LIGHTS DOWN')
-            SendRestCommand(TurnOnMovieLightingModeURL)
-            LightingMode = "MOVIE"
+        u = urllib.request.urlopen(PlexServerURL)
+        tree = etree.parse(u)
+        root = tree.getroot()
+        try:
+            value = root.find(".//*[@title='" + PlexClient + "']")
+            MovieStatus = value.attrib["state"]
+        except AttributeError:
+            MovieStatus = "stopped"
+        logging.debug('Movie is %s', MovieStatus)
+        if MovieStatus == "playing":
+            if LightingMode == "BRIGHT":
+                logging.info('Turning LIGHTS DOWN')
+                SendRestCommand(TurnOnMovieLightingModeURL)
+                LightingMode = "MOVIE"
+            else:
+                logging.debug('Lights Already DOWN')
         else:
-            logging.debug('Lights Already DOWN')
-    else:
-        if LightingMode == "MOVIE":
-            logging.info('Turning Lights UP')
-            SendRestCommand(TurnOnBrightLightingModeURL)
-            LightingMode = "BRIGHT"
-        else:
-            logging.debug('Lights Already UP')
-    logging.debug('Waiting for next polling interval.')
-    time.sleep(DelayTime)
-
-
+            if LightingMode == "MOVIE":
+                logging.info('Turning Lights UP')
+                SendRestCommand(TurnOnBrightLightingModeURL)
+                LightingMode = "BRIGHT"
+            else:
+                logging.debug('Lights Already UP')
+        logging.debug('Waiting for next polling interval.')
+        time.sleep(DelayTime)
+    except urllib.error.URLError as e:
+            print(e.reason)
+            print ('Plex Server Not Responding... waiting 1 minute.')
+            time.sleep(60)
