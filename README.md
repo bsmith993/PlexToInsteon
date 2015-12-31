@@ -44,10 +44,9 @@ The PlexToInsteon.ini file contains your variables. You must use your Plex Clien
 12/30/2015:
 Updated Plex authentication to use PlexToken. This is needed because the standard connections didn't work once turning your plex server into a plex family/home setup.
 
+Added url error handling. If server is not responding, will wait 1 minute and re-try. This the leading cause of the app stopping and hopefully this will let it run more consistently.
 -------------------------------------------------
 #### COMING SOON
-
-Need some error checking on the Plex status url.
 
 Convert to service- something that can show it is running in the systray or the like.
 
